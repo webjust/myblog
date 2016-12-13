@@ -42,7 +42,7 @@ if($id)
 <div class="row">
 	<div class="col-md-12">
 		<!-- 文章提交表单开始 -->
-		<form action="./news.add.handle.php" method="POST">
+		<form action="./news.modify.handle.php" method="POST">
 			<table class="table">
 				<tr>
 					<td width="10%">
@@ -87,10 +87,13 @@ if($id)
 				<tr>
 					<td></td>
 					<td>
-						<input type="submit" name="sub" class="btn btn-primary btn-sm">
+						<input type="submit" name="sub" class="btn btn-primary btn-sm" value="修改文章">
 					</td>
 				</tr>			
 			</table>
+			<!-- 使用隐藏域获取status, id -->
+			<input type="hidden" name="status" value="<?php echo $news_content['status']; ?>" />
+			<input type="hidden" name="id" value="<?php echo $news_content['id']; ?>" />
 		</form>
 		<!-- 文章提交表单结束 -->
 	</div>

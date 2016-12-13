@@ -3,6 +3,60 @@
 require_once("./comm/a_header.php");
 require_once("../comm/config.php");
 require_once("../comm/conn.php");
+require_once("../comm/func.php");
+
+// 获取当前页码
+$p = isset($_GET['p']) ? $_GET['p'] : 1;
+
+/*
+分页代码：
+
+声明每页显示多少条  5条
+总页数：            (总条数/每页显示的条数) 小数进1
+
+首页 上一页 1 2 3 4 5 下一页 末尾
+
+SELECT * FROM news LIMIT 0, 2
+SELECT * FROM news LIMIT 2, 2
+
+第一页 1  LIMIT 0, 2            (1-1)*2
+第二页 2  LIMIT 2, 2            (2-1)*2
+
+2		2
+3       4
+
+
+偏移量 = (当前页码数-1)*每页的条数
+
+ */
+
+// 每页显示的条数
+$page_num = 2;
+
+// 计算总页数
+$sql = "SELECT COUNT(*) FROM news";
+$result = mysql_query($sql, $res);
+$count = mysql_fetch_row($result);
+// 总条数
+$counts = $count[0];
+// 总页数
+$page_nums = ceil($counts / $page_num);
+
+// 翻页的判断
+if($p == 0)
+{
+	$p = 1;
+}
+elseif($p > $page_nums)
+{
+	$p = $page_nums;
+}
+
+// 偏移量
+$offset = ($p-1) * $page_num;
+
+
+// die;
 
 // 声明一个变量存储提示的信息
 $msg = "";
@@ -10,7 +64,7 @@ $msg = "";
 // 数据库的读取操作：天龙八步
 
 // 第4步：准备SQL
-$sql = "SELECT * FROM news ORDER BY id DESC";
+$sql = "SELECT * FROM news ORDER BY id DESC LIMIT {$offset}, {$page_num}";
 
 // 第5步：发送SQL语句
 $result = mysql_query($sql, $res);
@@ -76,7 +130,7 @@ mysql_close($res);
 				<td><?php echo $list['id'] ?></td>
 				<td><?php echo $list['title'] ?></td>
 				<td><?php echo $list['author'] ?></td>
-				<td><?php echo $list['status'] ?></td>
+				<td><?php echo getStatus($list['status']); ?></td>
 				<td><?php echo date("Y-m-d H:i:s", $list['addtime']); ?></td>
 				<td>
 					<a href="./news.del.php?id=<?php echo $list['id'] ?>" class="btn btn-danger btn-sm">删除</a>
@@ -84,6 +138,11 @@ mysql_close($res);
 				</td>
 			</tr>
 		<?php endforeach; ?>
+		<tr>
+			<td colspan="6" align="center">
+				<?php echo createPage($page_num, $page_nums); ?>
+			</td>
+		</tr>
 		</table>
 	</div>
 </div>
