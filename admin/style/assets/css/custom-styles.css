@@ -432,6 +432,13 @@ font-size: 19px;
 
 
 /*by wang 1213*/
+.page_nav{
+    padding: 10px;
+}
 .page_nav a{
     padding: 10px;
+}
+
+.page_nav .active{
+    border: 1px solid #ccc;
 }

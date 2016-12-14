@@ -2,6 +2,8 @@
 header("Content-Type:text/html; charset=utf-8");
 require_once("../comm/config.php");
 require_once("../comm/conn.php");
+require_once("../comm/func.php");
+getLoginStatus();
 
 /*
 删除操作：

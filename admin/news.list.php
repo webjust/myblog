@@ -93,6 +93,10 @@ mysql_free_result($result);
 // 第8步：关闭数据库连接
 mysql_close($res);
 
+
+// 状态的中文值
+$status_ZH = array("不显示", "显示");
+
 ?>
 
 <div id="page-wrapper">
@@ -130,7 +134,7 @@ mysql_close($res);
 				<td><?php echo $list['id'] ?></td>
 				<td><?php echo $list['title'] ?></td>
 				<td><?php echo $list['author'] ?></td>
-				<td><?php echo getStatus($list['status']); ?></td>
+				<td><a href="./news.active.php?a=status&id=<?php echo $list['id'] ?>&status=<?php echo $list['status']; ?>"><?php echo ($list['status']) ? $status_ZH[1] : $status_ZH[0]; ?></a></td>
 				<td><?php echo date("Y-m-d H:i:s", $list['addtime']); ?></td>
 				<td>
 					<a href="./news.del.php?id=<?php echo $list['id'] ?>" class="btn btn-danger btn-sm">删除</a>
@@ -140,7 +144,7 @@ mysql_close($res);
 		<?php endforeach; ?>
 		<tr>
 			<td colspan="6" align="center">
-				<?php echo createPage($page_num, $page_nums); ?>
+				<?php echo createPage($page_nums); ?>
 			</td>
 		</tr>
 		</table>

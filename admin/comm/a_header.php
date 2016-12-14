@@ -1,3 +1,8 @@
+<?php
+header("content-type:text/html; charset=utf-8");
+require_once("../comm/func.php");
+getLoginStatus();
+?>
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -25,7 +30,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">广工商实训项目</a>
+                <a class="navbar-brand" href="index.php">广工商实训项目</a>
             </div>
 
             <ul class="nav navbar-top-links navbar-right">
@@ -229,7 +234,7 @@
                         <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="#"><i class="fa fa-sign-out fa-fw"></i> 注销</a>
+                        <li><a href="./login.php?a=logout"><i class="fa fa-sign-out fa-fw"></i> 注销</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
